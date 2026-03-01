@@ -2,8 +2,9 @@ Xvfb "$DISPLAY" -screen "$XVFB_SCREEN" "$XVFB_RESOLUTION" -ac -nolisten tcp &
 _xvfb_pid="$!"
 
 function _stop_xvfb() {
+  set +e
   kill "$_xvfb_pid" >/dev/null 2>&1
-  rm -f /tmp/.X*-lock    
+  rm -f /tmp/.X*-lock
 }
 trap _stop_xvfb EXIT
 

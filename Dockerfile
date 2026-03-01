@@ -79,5 +79,6 @@ RUN wget -nv -O /usr/bin/winetricks https://raw.githubusercontent.com/Winetricks
 
 USER wineuser
 RUN source auto_xvfb && \
+    rm -Rf /tmp/.X* && \
     wineboot -i && \
     wineserver -k
