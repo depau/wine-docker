@@ -60,7 +60,8 @@ RUN --mount=type=bind,from=downloader,source=/dl,target=/mnt \
       apt-get update && \
       apt-get install -y --no-install-recommends /mnt/hangover*.deb; \
     fi && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/* && \
+    rm -f /tmp/.X*lock
 
 ENV WINEDEBUG=-all,-fixme,-fixme-all \
     XVFB_SCREEN=0 \
@@ -79,6 +80,5 @@ RUN wget -nv -O /usr/bin/winetricks https://raw.githubusercontent.com/Winetricks
 
 USER wineuser
 RUN source auto_xvfb && \
-    rm -Rf /tmp/.X* && \
     wineboot -i && \
     wineserver -k
