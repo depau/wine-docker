@@ -45,24 +45,43 @@ ENV WINEDEBUG=-all,-fixme,-fixme-all \
 # Use the x86_64 base build of this image as the FEX rootfs
 COPY --from=fex_rootfs \
     --chown=wineuser:wineuser \
-    --exclude=/etc/hosts \
-    --exclude=/etc/resolv.conf \
-    --exclude=/etc/timezone \
-    --exclude=/etc/localtime \
-    --exclude=/etc/passwd \
-    --exclude=/boot \
-    --exclude=/dev \
-    --exclude=/home \
-    --exclude=/media \
-    --exclude=/mnt \
-    --exclude=/proc \
-    --exclude=/root \
-    --exclude=/srv \
-    --exclude=/tmp \
-    --exclude=/var/cache/apt \
-    --exclude=/var/lib/apt \
-    --exclude=/sys \
-    / /home/wineuser/.fex-emu/RootFS/amd64
+    --exclude=hosts \
+    --exclude=resolv.conf \
+    --exclude=timezone \
+    --exclude=localtime \
+    --exclude=passwd \
+    /etc /home/wineuser/.fex-emu/RootFS/amd64/etc/
+
+COPY --from=fex_rootfs \
+    --chown=wineuser:wineuser \
+    --exclude=cache/apt/* \
+    --exclude=lib/apt/* \
+    /var /home/wineuser/.fex-emu/RootFS/amd64/var/
+
+COPY --from=fex_rootfs \
+    --chown=wineuser:wineuser \
+    /bin /home/wineuser/.fex-emu/RootFS/amd64/bin/
+
+COPY --from=fex_rootfs \
+    --chown=wineuser:wineuser \
+    /sbin /home/wineuser/.fex-emu/RootFS/amd64/sbin/
+
+COPY --from=fex_rootfs \
+    --chown=wineuser:wineuser \
+    /lib /home/wineuser/.fex-emu/RootFS/amd64/lib/
+
+COPY --from=fex_rootfs \
+    --chown=wineuser:wineuser \
+    /lib64 /home/wineuser/.fex-emu/RootFS/amd64/lib64/
+
+COPY --from=fex_rootfs \
+    --chown=wineuser:wineuser \
+    /opt /home/wineuser/.fex-emu/RootFS/amd64/opt/
+
+COPY --from=fex_rootfs \
+    --chown=wineuser:wineuser \
+    /usr /home/wineuser/.fex-emu/RootFS/amd64/usr/
+
 
 USER wineuser
 RUN echo '{"Config":{"RootFS":"amd64"}}' > /home/wineuser/.fex-emu/Config.json && \
