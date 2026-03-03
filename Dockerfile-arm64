@@ -62,6 +62,7 @@ COPY --from=fex_rootfs \
     --exclude=/var/cache/apt \
     --exclude=/var/lib/apt \
     --exclude=/sys \
+    --exclude=/opt \
     / /home/wineuser/.fex-emu/RootFS/amd64
 
 USER wineuser
